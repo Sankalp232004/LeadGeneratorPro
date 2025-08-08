@@ -1,27 +1,21 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // DOM Elements
     const inputEl = document.getElementById("input-el");
     const inputBtn = document.getElementById("input-btn");
     const tabBtn = document.getElementById("tab-btn");
     const deleteBtn = document.getElementById("delete-btn");
     const ulEl = document.getElementById("ul-el");
     
-    // Initialize leads array
     let myLeads = [];
 
-    // Check if this is running as a Chrome extension
     const isChromeExtension = typeof chrome !== 'undefined' && chrome.storage;
 
-    // Load saved leads based on environment
     function loadLeads() {
         if (isChromeExtension) {
-            // Chrome extension storage
             chrome.storage.local.get(['myLeads'], function(result) {
                 myLeads = result.myLeads || [];
                 renderLeads();
             });
         } else {
-            // Regular website localStorage
             const leadsFromStorage = JSON.parse(localStorage.getItem("myLeads"));
             if (leadsFromStorage) {
                 myLeads = leadsFromStorage;
@@ -30,7 +24,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Save leads based on environment
     function saveLeads() {
         if (isChromeExtension) {
             chrome.storage.local.set({ myLeads: myLeads });
@@ -39,7 +32,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Render leads to the UI
     function renderLeads() {
         let listItems = "";
         for (let i = 0; i < myLeads.length; i++) {
@@ -54,7 +46,6 @@ document.addEventListener('DOMContentLoaded', function() {
         ulEl.innerHTML = listItems;
     }
 
-    // Save Input Button
     inputBtn.addEventListener("click", function() {
         if (inputEl.value) {
             myLeads.push(inputEl.value);
@@ -64,7 +55,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Save Tab Button (works in extension only)
     if (isChromeExtension) {
         tabBtn.style.display = "block";
         tabBtn.addEventListener("click", function() {
@@ -80,7 +70,6 @@ document.addEventListener('DOMContentLoaded', function() {
         tabBtn.style.display = "none";
     }
 
-    // Delete All Button
     deleteBtn.addEventListener("dblclick", function() {
         if (confirm("Are you sure you want to delete all leads?")) {
             myLeads = [];
@@ -93,14 +82,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Prevent form submission on Enter key
     inputEl.addEventListener("keypress", function(e) {
         if (e.key === "Enter") {
-            e.preventDefault(); // Prevent page reload in website mode
+            e.preventDefault();
             inputBtn.click();
         }
     });
 
-    // Initial load
     loadLeads();
 });
