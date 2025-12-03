@@ -4,18 +4,94 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="index.css">
-    <title>Leads Tracker</title>
+    <title>Lead Generator Pro</title>
 </head>
 <body>
-    <div class="container">
-        <h1>Leads Tracker</h1>
-        <input type="text" id="input-el" placeholder="Enter lead URL...">
-        <button id="input-btn">SAVE INPUT</button>
-        <button id="tab-btn">SAVE TAB</button>
-        <button id="delete-btn">DELETE ALL</button>
-        <ul id="ul-el"></ul>
-        <div id="progress-bar" class="progress-bar"></div>
+    <div class="app-shell">
+        <header class="hero">
+            <div class="hero-text">
+                <p class="eyebrow">Lead Generator</p>
+                <h1>Turn curiosity into conversations</h1>
+                <p class="subtitle">Curate every interesting person, company, or idea in one intentional pipeline and build authentic outreach rituals.</p>
+                <div class="hero-metrics">
+                    <article class="metric-card">
+                        <span>Total leads</span>
+                        <strong id="metric-total">0</strong>
+                    </article>
+                    <article class="metric-card">
+                        <span>Starred focus</span>
+                        <strong id="metric-starred">0</strong>
+                    </article>
+                    <article class="metric-card">
+                        <span>Saved this week</span>
+                        <strong id="metric-week">0</strong>
+                    </article>
+                </div>
+            </div>
+            <div class="hero-panel">
+                <form id="lead-form">
+                    <div class="form-row">
+                        <label for="lead-name">Lead title</label>
+                        <input type="text" id="lead-name" placeholder="Ex: Acme Capital intro" maxlength="60" required>
+                    </div>
+                    <div class="form-row">
+                        <label for="lead-url">Link</label>
+                        <input type="url" id="lead-url" placeholder="https://" required>
+                    </div>
+                    <div class="form-row split">
+                        <label for="lead-stage">Stage</label>
+                        <select id="lead-stage">
+                            <option value="prospect">Prospect</option>
+                            <option value="contacted">Contacted</option>
+                            <option value="in-progress">In progress</option>
+                            <option value="won">Won</option>
+                        </select>
+                        <label for="lead-tags">Tags</label>
+                        <input type="text" id="lead-tags" placeholder="comma separated">
+                    </div>
+                    <div class="form-row">
+                        <label for="lead-note">Notes</label>
+                        <textarea id="lead-note" rows="3" placeholder="What stood out, next step, reminder..."></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" id="input-btn">Save lead</button>
+                        <button type="button" id="tab-btn">Save current tab</button>
+                    </div>
+                </form>
+            </div>
+        </header>
+
+        <main>
+            <section class="control-bar">
+                <div class="search-stack">
+                    <input type="search" id="search-input" placeholder="Search by title, domain or tag">
+                    <button id="clear-search">Clear</button>
+                </div>
+                <div class="chip-group" id="stage-filters">
+                    <button type="button" data-stage="all" class="chip active">All</button>
+                    <button type="button" data-stage="prospect" class="chip">Prospect</button>
+                    <button type="button" data-stage="contacted" class="chip">Contacted</button>
+                    <button type="button" data-stage="in-progress" class="chip">In progress</button>
+                    <button type="button" data-stage="won" class="chip">Won</button>
+                    <button type="button" data-stage="starred" class="chip">Starred</button>
+                </div>
+            </section>
+
+            <section class="lead-board">
+                <header class="board-header">
+                    <div>
+                        <p class="eyebrow">Pipeline</p>
+                        <h2>Lead vault</h2>
+                    </div>
+                    <button id="delete-btn">Clear vault</button>
+                </header>
+                <ul id="lead-list"></ul>
+                <p id="empty-state">Drop your first lead to kickstart momentum.</p>
+            </section>
+        </main>
     </div>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
     <script src="index.js"></script>
 </body>
 </html>
